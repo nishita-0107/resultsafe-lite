@@ -11,7 +11,7 @@ fs.readFileSync(path.join(__dirname, 'results.csv'), 'utf8').trim().split('\n').
 });
 
 const esc = s => String(s).replace(/[&<>]/g, c => '&#' + c.charCodeAt(0) + ';');
-const page = body => `<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>ResultSafe</title><style>body{font-family:sans-serif;max-width:560px;margin:40px auto;padding:0 16px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:8px;text-align:left}small{color:#666}</style></head><body><h1>ResultSafe</h1>${body}<hr><small>Served by ${esc(os.hostname())}</small></body></html>`;
+const page = body => `<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>ResultSafe</title><style>body{font-family:sans-serif;max-width:560px;margin:40px auto;padding:0 16px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:8px;text-align:left}small{color:#666}</style></head><body><h1>ResultSafe v2</h1>${body}<hr><small>Served by ${esc(os.hostname())}</small></body></html>`;
 const form = (msg = '') => page(`<p>${esc(msg)}</p><form method='post' action='/result'><input name='roll' placeholder='Roll number' maxlength='10' required> <input name='pin' type='password' placeholder='PIN' maxlength='12' required> <button>View result</button></form>`);
 
 function checkPin(pin, stored, cb) {

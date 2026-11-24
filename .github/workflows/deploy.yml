@@ -21,3 +21,27 @@ jobs:
           node-version: 20
       - run: npm install --package-lock-only
       - run: npm audit --audit-level=high
+  deploy:
+    needs: scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
+      - name: Start instance refresh
+        run: aws autoscaling start-instance-refresh --auto-scaling-group-name resultsafe-asg --preferences MinHealthyPercentage=50,InstanceWarmup=120
+      - name: Wait for refresh to finish
+        run: |
+          for i in $(seq 1 40); do
+            STATUS=$(aws autoscaling describe-instance-refreshes --auto-scaling-group-name resultsafe-asg --query 'InstanceRefreshes[0].Status' --output text)
+            echo "Refresh status: $STATUS"
+            if [ "$STATUS" = "Successful" ]; then exit 0; fi
+            if [ "$STATUS" = "Failed" ] || [ "$STATUS" = "Cancelled" ]; then exit 1; fi
+            sleep 30
+          done
+          exit 1
+      - name: Smoke test
+        run: curl -f http://${{ secrets.ALB_DNS }}/health
