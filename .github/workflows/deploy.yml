@@ -31,17 +31,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-east-1
-      - name: Start instance refresh
-        run: aws autoscaling start-instance-refresh --auto-scaling-group-name resultsafe-asg --preferences MinHealthyPercentage=50,InstanceWarmup=120
-      - name: Wait for refresh to finish
+      - name: Rolling replace servers
         run: |
-          for i in $(seq 1 40); do
-            STATUS=$(aws autoscaling describe-instance-refreshes --auto-scaling-group-name resultsafe-asg --query 'InstanceRefreshes[0].Status' --output text)
-            echo "Refresh status: $STATUS"
-            if [ "$STATUS" = "Successful" ]; then exit 0; fi
-            if [ "$STATUS" = "Failed" ] || [ "$STATUS" = "Cancelled" ]; then exit 1; fi
-            sleep 30
+          TG=$(aws elbv2 describe-target-groups --names resultsafe-tg --query 'TargetGroups[0].TargetGroupArn' --output text)
+          for ID in $(aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names resultsafe-asg --query 'AutoScalingGroups[0].Instances[].InstanceId' --output text); do
+            echo "Replacing $ID"
+            aws autoscaling terminate-instance-in-auto-scaling-group --instance-id $ID --no-should-decrement-desired-capacity
+            sleep 60
+            for i in $(seq 1 30); do
+              HEALTHY=$(aws elbv2 describe-target-health --target-group-arn $TG --query "length(TargetHealthDescriptions[?TargetHealth.State=='healthy'])" --output text)
+              echo "Healthy targets: $HEALTHY"
+              if [ "$HEALTHY" -ge 2 ]; then break; fi
+              sleep 20
+            done
           done
-          exit 1
       - name: Smoke test
         run: curl -f http://${{ secrets.ALB_DNS }}/health
