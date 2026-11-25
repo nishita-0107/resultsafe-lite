@@ -28,45 +28,47 @@ const esc = s => String(s).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';'
 // ---------- look and feel ----------
 const css = `
 *{box-sizing:border-box}
-body{margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;
-background:radial-gradient(1200px 600px at 10% -10%,#312e81 0%,transparent 60%),radial-gradient(900px 500px at 100% 0%,#0e7490 0%,transparent 55%),#0f172a}
-header{padding:28px 20px 8px;text-align:center}
-.logo{display:inline-flex;align-items:center;gap:12px;font-size:30px;font-weight:700;letter-spacing:.5px}
-.logo i{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#6366f1,#22d3ee);display:inline-block;box-shadow:0 8px 24px #6366f188}
-.badge{font-size:12px;background:#1e293b;border:1px solid #334155;padding:3px 10px;border-radius:999px;color:#94a3b8;vertical-align:middle}
-.tag{color:#94a3b8;margin:6px 0 0}
-main{max-width:620px;margin:20px auto;padding:0 16px}
-.card{background:#111c33cc;backdrop-filter:blur(6px);border:1px solid #243049;border-radius:18px;padding:26px;box-shadow:0 20px 50px #0008;animation:rise .5s ease both}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-h2{margin:0 0 4px;font-size:22px}
-.muted{color:#94a3b8;font-size:14px}
-input,textarea{width:100%;padding:13px 14px;margin:8px 0;border-radius:12px;border:1px solid #334155;background:#0b1224;color:#e2e8f0;font-size:16px;outline:none;transition:.2s}
-input:focus{border-color:#6366f1;box-shadow:0 0 0 3px #6366f144}
-button,.btn{display:inline-block;width:100%;padding:13px;margin-top:8px;border:0;border-radius:12px;font-size:16px;font-weight:600;color:#fff;cursor:pointer;text-decoration:none;text-align:center;
-background:linear-gradient(135deg,#6366f1,#06b6d4);transition:.2s}
-button:hover,.btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px #6366f155}
-.btn.ghost{background:transparent;border:1px solid #334155;color:#cbd5e1}
-.err{background:#7f1d1d55;border:1px solid #b91c1c;color:#fecaca;padding:10px 14px;border-radius:12px;margin-bottom:10px}
-.ok{background:#14532d55;border:1px solid #15803d;color:#bbf7d0;padding:10px 14px;border-radius:12px;margin-bottom:10px}
-.who{display:flex;align-items:center;gap:14px;margin-bottom:18px}
-.av{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;background:linear-gradient(135deg,#6366f1,#22d3ee)}
-.row{margin:14px 0}
-.row .top{display:flex;justify-content:space-between;margin-bottom:6px;font-weight:600}
-.bar{height:10px;background:#1e293b;border-radius:999px;overflow:hidden}
-.bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#6366f1,#22d3ee);animation:grow 1s ease both}
+body{margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:#0c0c0c;color:#e8e3d6;min-height:100vh}
+header{padding:48px 20px 6px;text-align:center}
+.logo{display:inline-flex;align-items:center;gap:16px;font-family:Georgia,'Times New Roman',serif;font-size:26px;font-weight:400;letter-spacing:5px;text-transform:uppercase}
+.logo i{width:10px;height:10px;background:#b8975a;display:inline-block;transform:rotate(45deg)}
+.tag{color:#7d786c;margin:12px 0 0;font-size:12px;letter-spacing:3px;text-transform:uppercase}
+main{max-width:540px;margin:30px auto;padding:0 16px}
+.card{background:#131313;border:1px solid #2a2a26;border-radius:3px;padding:34px;animation:fade .5s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{margin:0 0 6px;font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:400;letter-spacing:.5px}
+.muted{color:#7d786c;font-size:14px}
+code{color:#b8975a}
+input{width:100%;padding:13px 14px;margin:8px 0;border-radius:2px;border:1px solid #33332e;background:#0c0c0c;color:#e8e3d6;font-size:15px;outline:none;transition:border-color .2s}
+input:focus{border-color:#b8975a}
+input[type=file]{padding:10px;font-size:14px;color:#a8a396}
+button,.btn{display:block;width:100%;padding:13px;margin-top:12px;border:1px solid #e8e3d6;border-radius:2px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#0c0c0c;background:#e8e3d6;cursor:pointer;text-decoration:none;text-align:center;transition:.2s}
+button:hover,.btn:hover{background:#b8975a;border-color:#b8975a}
+.btn.ghost,button.ghost{background:transparent;color:#cfc9ba;border:1px solid #33332e}
+.btn.ghost:hover,button.ghost:hover{border-color:#b8975a;color:#b8975a;background:transparent}
+.err{background:#171110;border-left:3px solid #9a4a3c;color:#e0bdb4;padding:10px 14px;margin:12px 0}
+.ok{background:#15140f;border-left:3px solid #b8975a;color:#ddd3b4;padding:10px 14px;margin:12px 0}
+.who{display:flex;align-items:center;gap:16px;margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid #2a2a26}
+.av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:22px;color:#b8975a;border:1px solid #b8975a}
+.row{margin:18px 0}
+.row .top{display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px}
+.row .top span:last-child{font-family:Georgia,serif;font-size:17px}
+.bar{height:3px;background:#26261f}
+.bar span{display:block;height:100%;background:#b8975a;animation:grow 1s ease both}
 @keyframes grow{from{width:0}}
-.total{display:flex;justify-content:space-between;margin-top:20px;padding-top:16px;border-top:1px solid #243049;font-size:18px;font-weight:700}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
-.stat{background:#0b1224;border:1px solid #243049;border-radius:14px;padding:14px;text-align:center}
-.stat b{display:block;font-size:28px;background:linear-gradient(135deg,#a5b4fc,#67e8f9);-webkit-background-clip:text;color:transparent}
-footer{text-align:center;color:#64748b;font-size:13px;padding:24px 0 36px}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin-top:26px;padding-top:18px;border-top:1px solid #2a2a26;font-family:Georgia,serif;font-size:20px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+.stat{border:1px solid #2a2a26;padding:16px;text-align:center;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#7d786c}
+.stat b{display:block;font-family:Georgia,serif;font-size:32px;font-weight:400;letter-spacing:0;color:#e8e3d6;margin-bottom:4px}
+a{color:#b8975a}
+footer{text-align:center;color:#55524a;font-size:12px;letter-spacing:1px;padding:26px 0 40px}
 `;
 const page = body => `<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>ResultSafe</title><style>${css}</style></head><body>
-<header><div class='logo'><i></i>ResultSafe <span class='badge'>v3</span></div><p class='tag'>Check your results securely</p></header>
+<header><div class='logo'><i></i>ResultSafe</div><p class='tag'>Student results portal</p></header>
 <main>${body}</main><footer>Served by ${esc(os.hostname())}</footer></body></html>`;
 const form = (msg = '') => page(`<div class='card'><h2>Student login</h2><p class='muted'>Enter your roll number and PIN.</p>${msg ? `<div class='err'>${esc(msg)}</div>` : ''}
 <form method='post' action='/result'><input name='roll' placeholder='Roll number' maxlength='10' autocomplete='off' required><input name='pin' type='password' placeholder='PIN' maxlength='12' required><button>View result</button></form>
-<p class='muted' style='text-align:center;margin-top:16px'><a href='/admin' style='color:#67e8f9'>Teacher login</a></p></div>`);
+<p class='muted' style='text-align:center;margin-top:16px'><a href='/admin'>Teacher login</a></p></div>`);
 
 // ---------- helpers ----------
 const scrypt = (pw, salt) => new Promise((ok, no) => crypto.scrypt(pw, salt, 32, (e, k) => e ? no(e) : ok(k.toString('hex'))));
@@ -143,12 +145,12 @@ async function adminPage(msg, kind) {
 <div class='stats'><div class='stat'><b>${students}</b>students</div><div class='stat'><b>${views}</b>results viewed</div></div>
 <h2 style='font-size:18px;margin-top:8px'>Upload marks</h2><p class='muted'>CSV with the header <code>roll,name,pin,maths,physics,networks</code>. Max 500 rows. PINs are hashed on the server before storage.</p>
 <input type='file' id='f' accept='.csv'><button id='up'>Upload</button><div id='out' class='muted' style='margin-top:10px'></div>${lastHtml}
-<form method='post' action='/admin/logout'><button class='btn ghost' style='background:transparent;border:1px solid #334155'>Log out</button></form></div>
+<form method='post' action='/admin/logout'><button class='ghost'>Log out</button></form></div>
 <script>document.getElementById('up').onclick=async()=>{const f=document.getElementById('f').files[0],o=document.getElementById('out');if(!f){o.textContent='Choose a CSV file first.';return}
 o.textContent='Uploading...';const r=await fetch('/admin/upload',{method:'POST',headers:{'Content-Type':'text/csv'},body:await f.text()});const j=await r.json().catch(()=>({}));
 o.textContent=r.ok?'Uploaded '+j.rows+' rows. The checker is running; reload in a few seconds to see the result.':'Failed: '+(j.error||r.status)}</script>`);
 }
-const adminLogin = (msg = '') => page(`<div class='card'><h2>Teacher login</h2>${msg ? `<div class='err'>${esc(msg)}</div>` : ''}<form method='post' action='/admin/login'><input name='password' type='password' placeholder='Password' maxlength='64' required><button>Log in</button></form><p class='muted' style='text-align:center;margin-top:16px'><a href='/' style='color:#67e8f9'>Student login</a></p></div>`);
+const adminLogin = (msg = '') => page(`<div class='card'><h2>Teacher login</h2>${msg ? `<div class='err'>${esc(msg)}</div>` : ''}<form method='post' action='/admin/login'><input name='password' type='password' placeholder='Password' maxlength='64' required><button>Log in</button></form><p class='muted' style='text-align:center;margin-top:16px'><a href='/'>Student login</a></p></div>`);
 
 async function handleUpload(req) {
   const text = await readBody(req, 200 * 1024);
