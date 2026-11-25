@@ -27,48 +27,55 @@ const esc = s => String(s).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';'
 
 // ---------- look and feel ----------
 const css = `
+:root{--neon:#2df5c0;--ink:#f2f2f2;--mute:#77777b;--line:#232326}
 *{box-sizing:border-box}
-body{margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:#0c0c0c;color:#e8e3d6;min-height:100vh}
-header{padding:48px 20px 6px;text-align:center}
-.logo{display:inline-flex;align-items:center;gap:16px;font-family:Georgia,'Times New Roman',serif;font-size:26px;font-weight:400;letter-spacing:5px;text-transform:uppercase}
-.logo i{width:10px;height:10px;background:#b8975a;display:inline-block;transform:rotate(45deg)}
-.tag{color:#7d786c;margin:12px 0 0;font-size:12px;letter-spacing:3px;text-transform:uppercase}
-main{max-width:540px;margin:30px auto;padding:0 16px}
-.card{background:#131313;border:1px solid #2a2a26;border-radius:3px;padding:34px;animation:fade .5s ease both}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-h2{margin:0 0 6px;font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:400;letter-spacing:.5px}
-.muted{color:#7d786c;font-size:14px}
-code{color:#b8975a}
-input{width:100%;padding:13px 14px;margin:8px 0;border-radius:2px;border:1px solid #33332e;background:#0c0c0c;color:#e8e3d6;font-size:15px;outline:none;transition:border-color .2s}
-input:focus{border-color:#b8975a}
-input[type=file]{padding:10px;font-size:14px;color:#a8a396}
-button,.btn{display:block;width:100%;padding:13px;margin-top:12px;border:1px solid #e8e3d6;border-radius:2px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#0c0c0c;background:#e8e3d6;cursor:pointer;text-decoration:none;text-align:center;transition:.2s}
-button:hover,.btn:hover{background:#b8975a;border-color:#b8975a}
-.btn.ghost,button.ghost{background:transparent;color:#cfc9ba;border:1px solid #33332e}
-.btn.ghost:hover,button.ghost:hover{border-color:#b8975a;color:#b8975a;background:transparent}
-.err{background:#171110;border-left:3px solid #9a4a3c;color:#e0bdb4;padding:10px 14px;margin:12px 0}
-.ok{background:#15140f;border-left:3px solid #b8975a;color:#ddd3b4;padding:10px 14px;margin:12px 0}
-.who{display:flex;align-items:center;gap:16px;margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid #2a2a26}
-.av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:22px;color:#b8975a;border:1px solid #b8975a}
-.row{margin:18px 0}
-.row .top{display:flex;justify-content:space-between;margin-bottom:8px;font-size:15px}
-.row .top span:last-child{font-family:Georgia,serif;font-size:17px}
-.bar{height:3px;background:#26261f}
-.bar span{display:block;height:100%;background:#b8975a;animation:grow 1s ease both}
+body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#050505;color:var(--ink);min-height:100vh}
+header{max-width:520px;margin:0 auto;padding:60px 20px 0}
+.logo{font-size:14px;font-weight:600;letter-spacing:7px;text-transform:uppercase}
+.logo i{display:none}
+.tag{color:var(--mute);margin:10px 0 0;font-size:11px;letter-spacing:3px;text-transform:uppercase}
+main{max-width:520px;margin:56px auto 0;padding:0 20px}
+.card{animation:fade .6s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h2{margin:0 0 8px;font-size:36px;font-weight:300;letter-spacing:-.5px}
+.muted{color:var(--mute);font-size:14px;line-height:1.5}
+code{color:var(--neon);font-size:13px}
+form{margin-top:28px}
+input{width:100%;padding:16px 0 12px;margin:6px 0 14px;border:0;border-bottom:1px solid #2e2e32;border-radius:0;background:transparent;color:var(--ink);font-size:17px;outline:none;transition:border-color .25s,box-shadow .25s}
+input::placeholder{color:#55555a}
+input:focus{border-bottom-color:var(--neon);box-shadow:0 1px 0 var(--neon)}
+input[type=file]{font-size:14px;color:var(--mute);padding:14px 0}
+button,.btn{display:block;width:100%;padding:15px;margin-top:22px;border:1px solid var(--ink);border-radius:0;font:600 12px 'Segoe UI',system-ui,sans-serif;letter-spacing:3px;text-transform:uppercase;color:var(--ink);background:transparent;cursor:pointer;text-decoration:none;text-align:center;transition:.25s}
+button:hover,.btn:hover{background:var(--neon);border-color:var(--neon);color:#050505;box-shadow:0 0 22px #2df5c055}
+.btn.ghost,button.ghost{border-color:#2e2e32;color:var(--mute)}
+.btn.ghost:hover,button.ghost:hover{border-color:var(--neon);color:var(--neon);background:transparent;box-shadow:none}
+.err{color:#ff6b86;font-size:14px;margin:16px 0 0}
+.ok{color:var(--neon);font-size:14px;margin:16px 0 0;line-height:1.6}
+.who{padding-bottom:26px;border-bottom:1px solid var(--line)}
+.who h2{margin:0;font-size:40px}
+.av{display:none}
+.row{margin:28px 0}
+.row .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--mute)}
+.row .top span:last-child{font-size:26px;font-weight:300;letter-spacing:0;color:var(--ink)}
+.bar{height:2px;background:#1b1b1e}
+.bar span{display:block;height:100%;background:var(--neon);box-shadow:0 0 10px #2df5c088;animation:grow 1.1s cubic-bezier(.2,.8,.2,1) both}
 @keyframes grow{from{width:0}}
-.total{display:flex;justify-content:space-between;align-items:baseline;margin-top:26px;padding-top:18px;border-top:1px solid #2a2a26;font-family:Georgia,serif;font-size:20px}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
-.stat{border:1px solid #2a2a26;padding:16px;text-align:center;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#7d786c}
-.stat b{display:block;font-family:Georgia,serif;font-size:32px;font-weight:400;letter-spacing:0;color:#e8e3d6;margin-bottom:4px}
-a{color:#b8975a}
-footer{text-align:center;color:#55524a;font-size:12px;letter-spacing:1px;padding:26px 0 40px}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin:36px 0 8px;padding-top:24px;border-top:1px solid var(--line);font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--mute)}
+.total span:last-child{font-size:44px;font-weight:200;letter-spacing:-1px;color:var(--ink)}
+.stats{display:grid;grid-template-columns:1fr 1fr;margin:30px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{padding:26px 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--mute)}
+.stat+.stat{padding-left:28px;border-left:1px solid var(--line)}
+.stat b{display:block;font-size:52px;font-weight:200;letter-spacing:-2px;color:var(--ink);margin-bottom:6px}
+h3{margin:32px 0 6px;font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--ink)}
+a{color:var(--neon);text-decoration:none;border-bottom:1px solid #2df5c055}
+a.btn{border-bottom:1px solid var(--ink)}
+footer{max-width:520px;margin:0 auto;padding:64px 20px 40px;color:#47474b;font-size:11px;letter-spacing:2px;text-transform:uppercase}
 `;
-const page = body => `<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>ResultSafe</title><style>${css}</style></head><body>
-<header><div class='logo'><i></i>ResultSafe</div><p class='tag'>Student results portal</p></header>
+const page = body => `<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>ResultSafe</title><style>${css}</style></head><body><header><div class='logo'><i></i>ResultSafe</div><p class='tag'>Student results portal</p></header>
 <main>${body}</main><footer>Served by ${esc(os.hostname())}</footer></body></html>`;
 const form = (msg = '') => page(`<div class='card'><h2>Student login</h2><p class='muted'>Enter your roll number and PIN.</p>${msg ? `<div class='err'>${esc(msg)}</div>` : ''}
 <form method='post' action='/result'><input name='roll' placeholder='Roll number' maxlength='10' autocomplete='off' required><input name='pin' type='password' placeholder='PIN' maxlength='12' required><button>View result</button></form>
-<p class='muted' style='text-align:center;margin-top:16px'><a href='/admin'>Teacher login</a></p></div>`);
+<p class='muted' style='margin-top:30px'><a href='/admin'>Teacher login</a></p></div>`);
 
 // ---------- helpers ----------
 const scrypt = (pw, salt) => new Promise((ok, no) => crypto.scrypt(pw, salt, 32, (e, k) => e ? no(e) : ok(k.toString('hex'))));
@@ -143,14 +150,14 @@ async function adminPage(msg, kind) {
   const lastHtml = last ? `<div class='${last.status === 'LOADED' ? 'ok' : 'err'}'><b>Last upload: ${esc(last.status)}</b><br>${esc(last.file || '')} at ${esc(last.time || '')}${last.count ? '<br>' + esc(last.count) + ' students loaded' : ''}${(last.errors || []).map(x => '<br>' + esc(x)).join('')}</div>` : `<p class='muted'>No upload yet.</p>`;
   return page(`<div class='card'><h2>Teacher dashboard</h2>${msg ? `<div class='${kind || 'ok'}'>${esc(msg)}</div>` : ''}
 <div class='stats'><div class='stat'><b>${students}</b>students</div><div class='stat'><b>${views}</b>results viewed</div></div>
-<h2 style='font-size:18px;margin-top:8px'>Upload marks</h2><p class='muted'>CSV with the header <code>roll,name,pin,maths,physics,networks</code>. Max 500 rows. PINs are hashed on the server before storage.</p>
+<h3>Upload marks</h3><p class='muted'>CSV with the header <code>roll,name,pin,maths,physics,networks</code>. Max 500 rows. PINs are hashed on the server before storage.</p>
 <input type='file' id='f' accept='.csv'><button id='up'>Upload</button><div id='out' class='muted' style='margin-top:10px'></div>${lastHtml}
 <form method='post' action='/admin/logout'><button class='ghost'>Log out</button></form></div>
 <script>document.getElementById('up').onclick=async()=>{const f=document.getElementById('f').files[0],o=document.getElementById('out');if(!f){o.textContent='Choose a CSV file first.';return}
 o.textContent='Uploading...';const r=await fetch('/admin/upload',{method:'POST',headers:{'Content-Type':'text/csv'},body:await f.text()});const j=await r.json().catch(()=>({}));
 o.textContent=r.ok?'Uploaded '+j.rows+' rows. The checker is running; reload in a few seconds to see the result.':'Failed: '+(j.error||r.status)}</script>`);
 }
-const adminLogin = (msg = '') => page(`<div class='card'><h2>Teacher login</h2>${msg ? `<div class='err'>${esc(msg)}</div>` : ''}<form method='post' action='/admin/login'><input name='password' type='password' placeholder='Password' maxlength='64' required><button>Log in</button></form><p class='muted' style='text-align:center;margin-top:16px'><a href='/'>Student login</a></p></div>`);
+const adminLogin = (msg = '') => page(`<div class='card'><h2>Teacher login</h2>${msg ? `<div class='err'>${esc(msg)}</div>` : ''}<form method='post' action='/admin/login'><input name='password' type='password' placeholder='Password' maxlength='64' required><button>Log in</button></form><p class='muted' style='margin-top:30px'><a href='/'>Student login</a></p></div>`);
 
 async function handleUpload(req) {
   const text = await readBody(req, 200 * 1024);
